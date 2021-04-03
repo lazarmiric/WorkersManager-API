@@ -30,8 +30,8 @@ namespace WebAPI.Controllers
         {
             return Ok(await Mediator.Send(command));
         }
-        [HttpGet]
-        [Route("GetUsers/{firstName?}/{lastName?}/{cityName}")]
+
+        [HttpGet("GetUsers")]
         public async Task<IActionResult> GetUsers(string firstName = "" ,string lastName = "",string cityName = "")
         {
             return Ok(await Mediator.Send(new GetUsersQuery { FirstName = firstName, LastName = lastName, CityName = cityName}));
