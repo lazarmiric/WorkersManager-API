@@ -19,7 +19,7 @@ namespace Application.FeaturesUser.Commands
         public int CityID { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
-        public DateTime ModifiedDate { get; set; }
+
         public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, int>
         {
          
@@ -41,7 +41,7 @@ namespace Application.FeaturesUser.Commands
                     if (request.CityID!=0) user.CityID = request.CityID;
                     if (!String.IsNullOrEmpty(request.Email)) user.Email = request.Email;
                     if (!String.IsNullOrEmpty(request.Phone)) user.Phone = request.Phone;
-                    user.ModifiedOn = request.ModifiedDate;
+                    user.ModifiedOn = DateTime.Now;
                     await _context.SaveChangesAsync();
                     return user.Id;
                 }
