@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Linq;
+using Domain.Filter;
 
 namespace Application.FeaturesUser.Queries
 {
@@ -18,6 +19,8 @@ namespace Application.FeaturesUser.Queries
         public string LastName { get; set; }
 
         public string CityName { get; set; }
+
+        public PaginationFilter Filter { get; set; }
         public class GetUsersQueryHandler : IRequestHandler<GetUsersQuery, IEnumerable<UserDTO>>
         {
             private readonly IApplicationDbContext _context;
@@ -27,7 +30,8 @@ namespace Application.FeaturesUser.Queries
             }
             public async Task<IEnumerable<UserDTO>> Handle(GetUsersQuery request, CancellationToken cancellationToken)
             {
-                    var query = from x in _context.Users.Include(c => c.City)
+                var filter = request.Filter;
+                    var query = from x in _context.Users.Skip((filter.PageNumber - 1)*filter.PageSize).Take(filter.PageSize).Include(c => c.City)
                             where (x.FirstName == request.FirstName || request.FirstName == "")
                             && (x.LastName == request.LastName || request.LastName == "")
                             && (x.City.Name == request.CityName || request.CityName == "" ) select x;
