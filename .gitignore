@@ -338,3 +338,6 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+/Application/FeaturesUser/Commands/UpdateUserCommand.cs
+/Application/FeaturesUser/Queries/GetUserByIDQuery.cs
+/Domain/DataTransferObject/UserDTO.cs
