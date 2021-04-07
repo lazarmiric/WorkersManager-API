@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using NLog.Extensions.Logging;
 
 namespace WebAPI
 {
@@ -17,10 +18,16 @@ namespace WebAPI
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
+           Host.CreateDefaultBuilder(args)
+               .ConfigureWebHostDefaults(webBuilder =>
+               {
+                   webBuilder.UseStartup<Startup>();
+               }).ConfigureLogging((hostingContext, logging) => {
+                   logging.AddConfiguration(hostingContext.Configuration.GetSection("Loggging"));
+                   logging.AddConsole();
+                   logging.AddDebug();
+                   logging.AddEventSourceLogger();
+                   logging.AddNLog();
+               });
     }
 }
