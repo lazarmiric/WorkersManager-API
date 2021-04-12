@@ -36,7 +36,7 @@ namespace Application.FeaturesUser.Queries
                             && (x.LastName == request.LastName || request.LastName == "")
                             && (x.City.Name == request.CityName || request.CityName == "" ) select x;
 
-                return query.AsEnumerable().Select(users => new UserDTO { FirstName = users.FirstName, LastName = users.LastName,Id = users.Id,CityName = users.City.Name});
+                return query.AsEnumerable().Select(users => new UserDTO { FirstName = users.FirstName, LastName = users.LastName,Id = users.Id,CityName = users.City.Name,  UserRole = (users is Client ? "Client" : "Employee")});
             }
         }
     }

@@ -27,7 +27,7 @@ namespace Application.FeaturesUser.Queries
             public async Task<UserDTO> Handle(GetUserByIDQuery request, CancellationToken cancellationToken)
             {            
                 var query = from x in _context.Users.Include(c => c.City).Where(u => u.Id == request.Id) select x;
-                return query.AsEnumerable().Select(users => new UserDTO { FirstName = users.FirstName, LastName = users.LastName, Id = users.Id, CityName = users.City.Name }).FirstOrDefault();
+                return query.AsEnumerable().Select(users => new UserDTO { FirstName = users.FirstName, LastName = users.LastName, Id = users.Id, CityName = users.City.Name, UserRole = (users is Client ? "Client" : "Employee") }).FirstOrDefault();
             }
         }
     }
